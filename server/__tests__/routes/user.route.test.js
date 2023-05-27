@@ -12,6 +12,8 @@ const app = express();
 app.use(express.json());
 app.use("/", userRoute);
 
+jest.useRealTimers();
+
 jest.mock("../../src/controllers/user.controller.js", () => ({
   signup: jest.fn(),
   signin: jest.fn(),
@@ -37,7 +39,6 @@ describe("User Routes", () => {
   afterAll(() => {
     jest.restoreAllMocks();
   });
-  jest.setTimeout(150000);
 
   it("should call userController.signup when POST /signup", async () => {
     const mockRequest = {
